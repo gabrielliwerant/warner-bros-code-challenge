@@ -100,6 +100,32 @@ const addTodoClickEventHandlers = (id, status) => {
 };
 
 /**
+ * getNewTodo
+ *
+ * Create new todo for display use and DOM data modeling
+ *
+ * @param {number} id
+ * @param {string} title
+ * @param {boolean} completed
+ * @returns {string}
+ */
+const getNewTodo = (id, title, completed) => {
+  const completedClass = completed ? 'completed' : 'uncompleted';
+  const checked = completed ? 'checked' : '';
+
+  return `
+    <li id="todo-${id}" class="todo ${completedClass}">
+      <div class="user-actions">
+        <div>
+          <input type="checkbox" ${checked} />
+          ${title}
+        </div>
+        <button class="icon-btn delete-btn"><i class="material-icons">delete</i></button>
+      </div>
+    </li>`;
+};
+
+/**
  * displayTodos
  *
  * Handles display of todo lists
@@ -113,21 +139,7 @@ const displayTodos = todos => {
   let todoList;
 
   todoList = '<ul>';
-  todos.forEach(todo => {
-    let completedClass = todo.completed ? 'completed' : 'uncompleted';
-    let checked = todo.completed ? 'checked' : '';
-
-    todoList += `
-      <li id="todo-${todo.id}" class="todo ${completedClass}">
-        <div class="user-actions">
-          <div>
-            <input type="checkbox" ${checked} />
-            ${todo.title}
-          </div>
-          <button class="icon-btn delete-btn"><i class="material-icons">delete</i></button>
-        </div>
-      </li>`
-  });
+  todos.forEach(todo => todoList += getNewTodo(todo.id, todo.title, todo.completed));
   todoList += '</ul>';
   todosContainerEl.innerHTML = `${todoContainerHeader}${todoList}`;
 
