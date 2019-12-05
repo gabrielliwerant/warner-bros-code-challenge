@@ -9,14 +9,18 @@ const TODOS_BY_USER_ID_URL = 'https://jsonplaceholder.typicode.com/todos?userId'
  * @return {void}
  */
 const start = () => {
-  const usersNavEl = window.document.querySelector('#users-container nav');
-
-  displayLoading(usersNavEl);
+  displayLoading();
 
   fetch(USERS_URL)
     .then(res => res.json())
-    .then(json => displayUsers(json))
-    .catch(err => displayError(err));
+    .then(json => {
+      displayUsers(json);
+      removeLoading();
+    })
+    .catch(err => {
+      displayError(err);
+      removeLoading();
+    });
 };
 
 start();

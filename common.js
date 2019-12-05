@@ -3,12 +3,18 @@
  *
  * Displays our loading indicator
  *
- * @param {DOM Element} el
  * @return {void}
  */
-const displayLoading = el => {
-  el.innerHTML = '<p>Loading...</p>';
-};
+const displayLoading = () => window.document.querySelector('#loading-overlay').innerHTML = '<p>Loading...</p>';
+
+/**
+ * removeLoading
+ *
+ * Removed our loading indicator
+ *
+ * @return {void}
+ */
+const removeLoading = () => window.document.querySelector('#loading-overlay').innerHTML = '';
 
 /**
  * displayError

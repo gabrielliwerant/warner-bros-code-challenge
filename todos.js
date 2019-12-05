@@ -50,8 +50,7 @@ const addTodoClickEventHandlers = (id, status) => {
   let todoCheckboxEl = window.document.getElementById(`todo-${id}`).getElementsByTagName('input')[0];
 
   todoCheckboxEl.addEventListener('click', e => {
-    let loadingEl = window.document.querySelector('#loading-overlay');
-    displayLoading(loadingEl);
+    displayLoading();
 
     fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
       method: 'PATCH',
@@ -61,11 +60,12 @@ const addTodoClickEventHandlers = (id, status) => {
     .then(res => res.json())
     .then(json => {
       handleCompletedUiStatusForTodo(json.id);
-      loadingEl.innerHTML = '';
+      removeLoading();
     })
     .catch(err => {
       displayError(err);
       resetCheckboxStatus(todoCheckboxEl);
+      removeLoading();
     });
   });
 };
@@ -81,8 +81,6 @@ const addTodoClickEventHandlers = (id, status) => {
 const displayTodos = todos => {
   const todosContainerEl = window.document.querySelector('#todos-container');
   let todoList;
-
-  displayLoading(todosContainerEl);
 
   todoList = '<ul>';
   todos.forEach(todo => {

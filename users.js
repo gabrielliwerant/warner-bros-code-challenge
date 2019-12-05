@@ -71,13 +71,19 @@ const addUserClickEventHandlers = (id, users) => {
     // Finding the id depends on which element was clicked
     const id = className === 'user-actions' ? e.target.parentElement.id.split('-')[1] : e.target.id.split('-')[1];
 
+    displayLoading();
+
     fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
       .then(res => res.json())
       .then(json => {
         displayTodos(json);
         handleActiveUiStatusForUser(users, userEl);
+        removeLoading();
       })
-      .catch(err => displayError(err))
+      .catch(err => {
+        displayError(err);
+        removeLoading();
+      })
   });
 
   infoButtonEl.addEventListener('click', e => handleActiveUiStatusForUserInfo(userEl));
