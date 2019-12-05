@@ -83,17 +83,19 @@ const addTodoClickEventHandlers = (id, status) => {
 
   let deleteButtonEl = window.document.getElementById(`todo-${id}`).querySelector('.delete-btn');
   deleteButtonEl.addEventListener('click', e => {
-    displayLoading();
+    if (window.confirm('Are you sure you wish to delete this todo item?')) {
+      displayLoading();
 
-    fetch(`${TODOS_BY_ID}/${id}`, { method: 'DELETE' })
-      .then(res => {
-        removeTodo(todoEl);
-        removeLoading();
-      })
-      .catch(err => {
-        displayError(err);
-        removeLoading();
-      });
+      fetch(`${TODOS_BY_ID}/${id}`, { method: 'DELETE' })
+        .then(res => {
+          removeTodo(todoEl);
+          removeLoading();
+        })
+        .catch(err => {
+          displayError(err);
+          removeLoading();
+        });
+    }
   });
 };
 
