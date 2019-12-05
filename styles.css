@@ -1,0 +1,46 @@
+html,
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
+.active {
+  display: block;
+}
+
+.inactive {
+  display: none;
+}
+
+.user {
+  cursor: pointer;
+  padding: 10px 4px;
+  max-width: 300px;
+}
+.user:hover {
+  background-color: #CCCCCC;
+}
+
+.user ul {
+  padding: 10px 0 0 0;
+}
+
+.user-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-btn {
+  cursor: pointer;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  border: none;
+  padding: 4px;
+}
+.icon-btn:hover {
+  background-color: #AAAAAA;
+}
