@@ -9,7 +9,7 @@ const displayTodos = todos => {
   displayLoading(todosContainerEl);
 
   todoList = '<ul>';
-  todos.forEach(todo => todoList += `<li>${todo.id}</li>`);
+  todos.forEach(todo => todoList += `<li id="todo-${todo.id}">${todo.title}</li>`);
   todoList += '</ul>';
   todosContainerEl.innerHTML = todoList;
 };
