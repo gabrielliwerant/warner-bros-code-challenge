@@ -49,7 +49,7 @@ const displayUsers = users => {
 
   usersList = '<ul>';
   users.forEach(user => usersList += `
-    <li class="user" id="user-${user.id}">
+    <li class="user inactive" id="user-${user.id}">
       <div class="user-actions">
         ${user.username}
         <button class="icon-btn info-btn"><i class="material-icons">info</i></button>
@@ -76,14 +76,30 @@ const displayUsers = users => {
       const className = e.target.className;
 
       // Only continue if we're clicking on the main li or actions container
-      if (className !== 'user-actions' && className !== 'user') return;
+      if (className !== 'user-actions' && !className.includes('user')) return;
 
       // Finding the id depends on which element was clicked
       const id = className === 'user-actions' ? e.target.parentElement.id.split('-')[1] : e.target.id.split('-')[1];
 
       fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
         .then(res => res.json())
-        .then(json => displayTodos(json))
+        .then(json => {
+          displayTodos(json);
+
+          const userEl = window.document.getElementById(`user-${user.id}`);
+          const isActive = !userEl.getAttribute('class').includes('inactive');
+
+          if (!isActive) {
+            let newUserEl;
+            users.forEach(user => {
+              newUserEl = window.document.getElementById(`user-${user.id}`);
+              newUserEl.classList.remove('active');
+              if (!newUserEl.getAttribute('class').includes('inactive')) newUserEl.classList.add('inactive');
+            });
+            userEl.classList.remove('inactive');
+            userEl.classList.add('active');
+          }
+        })
         .catch(err => displayError(err))
     });
 
