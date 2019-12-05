@@ -1,3 +1,12 @@
+/**
+ * handleActiveUiStatusForUser
+ *
+ * Handles the toggling of the active status on the user for display purposes
+ *
+ * @param {array} users
+ * @param {DOM Element} userEl
+ * @return {void}
+ */
 const handleActiveUiStatusForUser = (users, userEl) => {
   // Find active status from class name
   const isActive = !userEl.getAttribute('class').includes('inactive');
@@ -17,7 +26,16 @@ const handleActiveUiStatusForUser = (users, userEl) => {
   }
 };
 
-const handleActiveUiStatusForUserInfo = (user, userEl) => {
+/**
+ * handleActiveUiStatusForUserInfo
+ *
+ * Handles the toggling of the active status for the user info section for
+ * purposes
+ *
+ * @param {DOM Element} userEl
+ * @return {void}
+ */
+const handleActiveUiStatusForUserInfo = userEl => {
   // Find active status from class name
   const isActive = !userEl.querySelector('ul').getAttribute('class').includes('inactive');
 
@@ -31,8 +49,17 @@ const handleActiveUiStatusForUserInfo = (user, userEl) => {
   }
 };
 
-const addUserClickEventHandlers = (user, users) => {
-  let userEl = window.document.getElementById(`user-${user.id}`);
+/**
+ * addUserClickEventHandlers
+ *
+ * Adds event handlers related to clicking on a user
+ *
+ * @param {number} id
+ * @param {array} users
+ * @return {void}
+ */
+const addUserClickEventHandlers = (id, users) => {
+  let userEl = window.document.getElementById(`user-${id}`);
   let infoButtonEl = userEl.querySelector('.info-btn');
 
   userEl.addEventListener('click', e => {
@@ -53,7 +80,7 @@ const addUserClickEventHandlers = (user, users) => {
       .catch(err => displayError(err))
   });
 
-  infoButtonEl.addEventListener('click', e => handleActiveUiStatusForUserInfo(user, userEl));
+  infoButtonEl.addEventListener('click', e => handleActiveUiStatusForUserInfo(userEl));
 };
 
 /**
@@ -88,5 +115,5 @@ const displayUsers = users => {
   usersList += '</ul>';
   usersNavEl.innerHTML = usersList;
 
-  users.forEach(user => addUserClickEventHandlers(user, users));
+  users.forEach(user => addUserClickEventHandlers(user.id, users));
 };
