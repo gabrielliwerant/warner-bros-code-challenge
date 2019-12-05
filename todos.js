@@ -54,7 +54,7 @@ const removeTodo = (todos, id, el) => {
 
   todos.splice(todoIndex, 1);
 
-  el.remove()
+  if (el) el.remove()
 };
 
 /**
@@ -64,18 +64,20 @@ const removeTodo = (todos, id, el) => {
  *
  * @param {array} todos
  * @param {number} userId
+ * @param {number} id
  * @param {title} title
  * @param {boolean} completed
  * @return {boid}
  */
-const addTodo = (todos, userId, title, completed) => {
+const addTodo = (todos, userId, id, title, completed) => {
   // KLUDGE: Normally we would use the returned id from the POST response, but
   // the API returns the same stubbed response every time, so we need to create
   // new ids
-  const id = Math.floor(Math.random() * Math.floor(100000));
+  let newId = Math.floor(Math.random() * Math.floor(100000));
+  if (id) newId = id;
 
   // Add new todo to the front of the list
-  todos.unshift({ userId, id, title, completed });
+  todos.unshift({ userId, id: newId, title, completed });
 };
 
 /**
@@ -197,7 +199,7 @@ const addEventHandlerForCreatingTodos = (userId, todos) => {
     })
       .then(res => res.json())
       .then(todo => {
-        addTodo(todos, userId, todo.title, todo.completed)
+        addTodo(todos, userId, undefined, todo.title, todo.completed)
         displayTodos(todos);
         removeLoading();
       })
