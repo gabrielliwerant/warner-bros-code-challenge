@@ -222,7 +222,7 @@ const displayTodos = todos => {
   const todoAdder = `
     <div id="todo-add-container">
       <button class="icon-btn add-btn"><i class="material-icons">add</i></button>
-      <input id="todo-add" type="text" placeholder="Enter new todo here!" />
+      <input id="todo-add" class="todo-add-input" type="text" placeholder="Enter new todo here!" />
     </div>`;
   let todoList;
 
