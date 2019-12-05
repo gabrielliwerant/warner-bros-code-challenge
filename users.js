@@ -1,3 +1,5 @@
+const TODOS_BY_USER_ID_URL = 'https://jsonplaceholder.typicode.com/todos?userId';
+
 /**
  * handleActiveUiStatusForUser
  *
