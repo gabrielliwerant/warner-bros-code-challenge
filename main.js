@@ -1,7 +1,23 @@
+/**
+ * displayLoading
+ *
+ * Displays our loading indicator
+ *
+ * @param {DOM Element} el
+ * @return {void}
+ */
 const displayLoading = el => {
   el.innerHTML = '<p>Loading...</p>';
 };
 
+/**
+ * displayTodos
+ *
+ * Handles display of todo lists
+ *
+ * @param {array} todos
+ * @return {void}
+ */
 const displayTodos = todos => {
   const todosContainerEl = window.document.querySelector('#todos-container');
   let todoList;
@@ -14,6 +30,15 @@ const displayTodos = todos => {
   todosContainerEl.innerHTML = todoList;
 };
 
+/**
+ * displayUsers
+ *
+ * Handles display of user list, adding event handlers for each user to enable
+ * display of todo information on click.
+ *
+ * @param {array} users
+ * return {void}
+ */
 const displayUsers = users => {
   const usersContainerEl = window.document.querySelector('#users-container');
   let usersList;
@@ -38,12 +63,27 @@ const displayUsers = users => {
   });
 };
 
+/**
+ * displayError
+ *
+ * Displays erron messages
+ *
+ * @param {string} msg
+ * @param {void}
+ */
 const displayError = msg => {
   const errorsEl = window.document.querySelector('#error-container');
 
   errorsEl.innerHTML = `<p>${msg}</p>`;
 };
 
+/**
+ * start
+ *
+ * Bootstrap application by loading any initial data/display itens
+ *
+ * @return {void}
+ */
 const start = () => {
   const usersContainerEl = window.document.querySelector('#users-container');
 
