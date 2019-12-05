@@ -33,6 +33,64 @@ const displayTodos = todos => {
   todosContainerEl.innerHTML = todoList;
 };
 
+const handleActiveUiStatusForUser = (users, userEl) => {
+  // Find active status from class name
+  const isActive = !userEl.getAttribute('class').includes('inactive');
+
+  if (!isActive) {
+    // Remove all active classes, and add back missing inactive classes to reset UI state
+    users.forEach(user => {
+      let userEl = window.document.getElementById(`user-${user.id}`);
+
+      userEl.classList.remove('active');
+      if (!userEl.getAttribute('class').includes('inactive')) userEl.classList.add('inactive');
+    });
+
+    // Toggle the appropriate active classes
+    userEl.classList.remove('inactive');
+    userEl.classList.add('active');
+  }
+};
+
+const handleActiveUiStatusForUserInfo = (user, userEl) => {
+  // Find active status from class name
+  const isActive = !userEl.querySelector('ul').getAttribute('class').includes('inactive');
+
+  // Toggle the appropriate active classes
+  if (isActive) {
+    userEl.querySelector('ul').classList.remove('active');
+    userEl.querySelector('ul').classList.add('inactive');
+  } else {
+    userEl.querySelector('ul').classList.remove('inactive');
+    userEl.querySelector('ul').classList.add('active');
+  }
+};
+
+const addUserClickEventHandlers = (user, users) => {
+  let userEl = window.document.getElementById(`user-${user.id}`);
+  let infoButtonEl = userEl.querySelector('.info-btn');
+
+  userEl.addEventListener('click', e => {
+    const className = e.target.className;
+
+    // Only continue if we're clicking on the main li or actions container
+    if (className !== 'user-actions' && !className.includes('user')) return;
+
+    // Finding the id depends on which element was clicked
+    const id = className === 'user-actions' ? e.target.parentElement.id.split('-')[1] : e.target.id.split('-')[1];
+
+    fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
+      .then(res => res.json())
+      .then(json => {
+        displayTodos(json);
+        handleActiveUiStatusForUser(users, userEl);
+      })
+      .catch(err => displayError(err))
+  });
+
+  infoButtonEl.addEventListener('click', e => handleActiveUiStatusForUserInfo(user, userEl));
+};
+
 /**
  * displayUsers
  *
@@ -65,58 +123,7 @@ const displayUsers = users => {
   usersList += '</ul>';
   usersNavEl.innerHTML = usersList;
 
-  var userEl;
-  let infoButtonEl;
-
-  users.forEach(user => {
-    userEl = window.document.getElementById(`user-${user.id}`);
-    infoButtonEl = userEl.querySelector('.info-btn');
-
-    userEl.addEventListener('click', e => {
-      const className = e.target.className;
-
-      // Only continue if we're clicking on the main li or actions container
-      if (className !== 'user-actions' && !className.includes('user')) return;
-
-      // Finding the id depends on which element was clicked
-      const id = className === 'user-actions' ? e.target.parentElement.id.split('-')[1] : e.target.id.split('-')[1];
-
-      fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
-        .then(res => res.json())
-        .then(json => {
-          displayTodos(json);
-
-          const userEl = window.document.getElementById(`user-${user.id}`);
-          const isActive = !userEl.getAttribute('class').includes('inactive');
-
-          if (!isActive) {
-            let newUserEl;
-            users.forEach(user => {
-              newUserEl = window.document.getElementById(`user-${user.id}`);
-              newUserEl.classList.remove('active');
-              if (!newUserEl.getAttribute('class').includes('inactive')) newUserEl.classList.add('inactive');
-            });
-            userEl.classList.remove('inactive');
-            userEl.classList.add('active');
-          }
-        })
-        .catch(err => displayError(err))
-    });
-
-    infoButtonEl.addEventListener('click', e => {
-      userEl = window.document.getElementById(`user-${user.id}`);
-
-      const isActive = !userEl.querySelector('ul').getAttribute('class').includes('inactive');
-
-      if (isActive) {
-        userEl.querySelector('ul').classList.remove('active');
-        userEl.querySelector('ul').classList.add('inactive');
-      } else {
-        userEl.querySelector('ul').classList.remove('inactive');
-        userEl.querySelector('ul').classList.add('active');
-      }
-    });
-  });
+  users.forEach(user => addUserClickEventHandlers(user, users));
 };
 
 /**
