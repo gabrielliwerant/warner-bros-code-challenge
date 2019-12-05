@@ -43,25 +43,61 @@ const displayTodos = todos => {
  * return {void}
  */
 const displayUsers = users => {
-  const usersContainerEl = window.document.querySelector('#users-container');
+  const usersNavEl = window.document.querySelector('#users-container nav');
   let usersList;
+  let informationIcon;
 
   usersList = '<ul>';
-  users.forEach(user => usersList += `<li><button id="user-${user.id}">${user.username}</button></li>`);
+  users.forEach(user => usersList += `
+    <li class="user" id="user-${user.id}">
+      <div class="user-actions">
+        ${user.username}
+        <button class="icon-btn info-btn"><i class="material-icons">info</i></button>
+      </div>
+      <ul class="inactive">
+        <li>Name: ${user.name}</li>
+        <li>Email: ${user.email}</li>
+        <li>Phone: ${user.phone}</li>
+        <li>Website: ${user.website}</li>
+      </ul>
+    </li>`
+  );
   usersList += '</ul>';
-  usersContainerEl.innerHTML = usersList;
+  usersNavEl.innerHTML = usersList;
 
-  let buttonEl;
+  var userEl;
+  let infoButtonEl;
 
   users.forEach(user => {
-    buttonEl = window.document.getElementById(`user-${user.id}`);
-    buttonEl.addEventListener('click', e => {
-      const id = e.target.id.split('-')[1];
+    userEl = window.document.getElementById(`user-${user.id}`);
+    infoButtonEl = userEl.querySelector('.info-btn');
+
+    userEl.addEventListener('click', e => {
+      const className = e.target.className;
+
+      // Only continue if we're clicking on the main li or actions container
+      if (className !== 'user-actions' && className !== 'user') return;
+
+      // Finding the id depends on which element was clicked
+      const id = className === 'user-actions' ? e.target.parentElement.id.split('-')[1] : e.target.id.split('-')[1];
 
       fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
         .then(res => res.json())
         .then(json => displayTodos(json))
         .catch(err => displayError(err))
+    });
+
+    infoButtonEl.addEventListener('click', e => {
+      userEl = window.document.getElementById(`user-${user.id}`);
+      const isActive = userEl.querySelector('ul').getAttribute('class') === 'active';
+
+      if (isActive) {
+        userEl.querySelector('ul').classList.remove('active');
+        userEl.querySelector('ul').classList.add('inactive');
+      } else {
+        userEl.querySelector('ul').classList.remove('inactive');
+        userEl.querySelector('ul').classList.add('active');
+      }
     });
   });
 };
@@ -88,9 +124,9 @@ const displayError = msg => {
  * @return {void}
  */
 const start = () => {
-  const usersContainerEl = window.document.querySelector('#users-container');
+  const usersNavEl = window.document.querySelector('#users-container nav');
 
-  displayLoading(usersContainerEl);
+  displayLoading(usersNavEl);
 
   fetch(USERS_URL)
     .then(res => res.json())
