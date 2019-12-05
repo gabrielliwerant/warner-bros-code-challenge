@@ -54,7 +54,7 @@ const displayUsers = users => {
         ${user.username}
         <button class="icon-btn info-btn"><i class="material-icons">info</i></button>
       </div>
-      <ul class="inactive">
+      <ul class="user-info inactive">
         <li>Name: ${user.name}</li>
         <li>Email: ${user.email}</li>
         <li>Phone: ${user.phone}</li>
@@ -89,7 +89,8 @@ const displayUsers = users => {
 
     infoButtonEl.addEventListener('click', e => {
       userEl = window.document.getElementById(`user-${user.id}`);
-      const isActive = userEl.querySelector('ul').getAttribute('class') === 'active';
+
+      const isActive = !userEl.querySelector('ul').getAttribute('class').includes('inactive');
 
       if (isActive) {
         userEl.querySelector('ul').classList.remove('active');

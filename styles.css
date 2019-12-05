@@ -5,6 +5,7 @@ body {
 
 ul {
   list-style: none;
+  padding-left: 0;
 }
 
 .active {
@@ -24,8 +25,8 @@ ul {
   background-color: #CCCCCC;
 }
 
-.user ul {
-  padding: 10px 0 0 0;
+.user .user-info {
+  padding-top: 10px;
 }
 
 .user-actions {
