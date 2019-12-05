@@ -136,12 +136,17 @@ const getNewTodo = (id, title, completed) => {
 const displayTodos = todos => {
   const todosContainerEl = window.document.querySelector('#todos-container');
   const todoContainerHeader = '<h2>Todos:</h2>';
+  const todoAdder = `
+    <div id="todo-add-container">
+      <button class="icon-btn add-btn"><i class="material-icons">add</i></button>
+      <input id="todo-add" type="text" placeholder="Enter new todo here!" />
+    </div>`;
   let todoList;
 
   todoList = '<ul>';
   todos.forEach(todo => todoList += getNewTodo(todo.id, todo.title, todo.completed));
   todoList += '</ul>';
-  todosContainerEl.innerHTML = `${todoContainerHeader}${todoList}`;
+  todosContainerEl.innerHTML = `${todoContainerHeader}${todoAdder}${todoList}`;
 
   todos.forEach(todo => addTodoClickEventHandlers(todo.id, todo.completed));
 };
