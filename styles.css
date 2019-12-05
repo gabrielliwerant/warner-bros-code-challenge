@@ -60,8 +60,9 @@ ul {
   background-color: #CCCCCC;
 }
 
-.user .user-info {
+.user-info {
   padding-top: 10px;
+  cursor: default;
 }
 
 .user-actions {
