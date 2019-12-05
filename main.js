@@ -1,3 +1,6 @@
+const USERS_URL = 'https://jsonplaceholder.typicode.com/users';
+const TODOS_BY_USER_ID_URL = 'https://jsonplaceholder.typicode.com/todos?userId';
+
 /**
  * displayLoading
  *
@@ -55,7 +58,7 @@ const displayUsers = users => {
     buttonEl.addEventListener('click', e => {
       const id = e.target.id.split('-')[1];
 
-      fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
+      fetch(`${TODOS_BY_USER_ID_URL}=${id}`)
         .then(res => res.json())
         .then(json => displayTodos(json))
         .catch(err => displayError(err))
@@ -89,7 +92,7 @@ const start = () => {
 
   displayLoading(usersContainerEl);
 
-  fetch('https://jsonplaceholder.typicode.com/users')
+  fetch(USERS_URL)
     .then(res => res.json())
     .then(json => displayUsers(json))
     .catch(err => displayError(err));
