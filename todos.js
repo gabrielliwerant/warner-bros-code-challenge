@@ -80,6 +80,7 @@ const addTodoClickEventHandlers = (id, status) => {
  */
 const displayTodos = todos => {
   const todosContainerEl = window.document.querySelector('#todos-container');
+  const todoContainerHeader = '<h2>Todos:</h2>';
   let todoList;
 
   todoList = '<ul>';
@@ -94,7 +95,7 @@ const displayTodos = todos => {
       </li>`
   });
   todoList += '</ul>';
-  todosContainerEl.innerHTML = todoList;
+  todosContainerEl.innerHTML = `${todoContainerHeader}${todoList}`;
 
   todos.forEach(todo => addTodoClickEventHandlers(todo.id, todo.completed));
 };

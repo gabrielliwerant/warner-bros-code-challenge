@@ -16,6 +16,15 @@ ul {
   font-weight: bold;
 }
 
+#users-container {
+  margin-right: 5%;
+}
+
+.interface-panels {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .user.active {
   background-color: #CCCCCC;
 }
@@ -33,7 +42,7 @@ ul {
 .user {
   cursor: pointer;
   padding: 10px 4px;
-  max-width: 300px;
+  min-width: 300px;
 }
 .user:hover {
   background-color: #CCCCCC;
@@ -58,6 +67,10 @@ ul {
 }
 .icon-btn:hover {
   background-color: #AAAAAA;
+}
+
+.todo {
+  margin: 10px 0;
 }
 
 .todo.completed {
