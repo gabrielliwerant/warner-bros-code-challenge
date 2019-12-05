@@ -1,4 +1,4 @@
-const TODOS_BY_ID = 'https://jsonplaceholder.typicode.com/todos';
+const TODOS_URL = 'https://jsonplaceholder.typicode.com/todos';
 
 /**
  * handleCompletedUiStatusForTodo
@@ -64,7 +64,7 @@ const addTodoClickEventHandlers = (id, status) => {
   todoCheckboxEl.addEventListener('click', e => {
     displayLoading();
 
-    fetch(`${TODOS_BY_ID}/${id}`, {
+    fetch(`${TODOS_URL}/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ completed: !status }),
       headers: { "Content-type": "application/json; charset=UTF-8" }
@@ -86,7 +86,7 @@ const addTodoClickEventHandlers = (id, status) => {
     if (window.confirm('Are you sure you wish to delete this todo item?')) {
       displayLoading();
 
-      fetch(`${TODOS_BY_ID}/${id}`, { method: 'DELETE' })
+      fetch(`${TODOS_URL}/${id}`, { method: 'DELETE' })
         .then(res => {
           removeTodo(todoEl);
           removeLoading();
