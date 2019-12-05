@@ -5,7 +5,7 @@
  *
  * @return {void}
  */
-const displayLoading = () => window.document.querySelector('#loading-overlay').innerHTML = '<p>Loading...</p>';
+const displayLoading = () => window.document.querySelector('#loading-container').innerHTML = '<div id="loading-overlay"><p class="loading-msg">Loading...</p></div>';
 
 /**
  * removeLoading
@@ -14,7 +14,7 @@ const displayLoading = () => window.document.querySelector('#loading-overlay').i
  *
  * @return {void}
  */
-const removeLoading = () => window.document.querySelector('#loading-overlay').innerHTML = '';
+const removeLoading = () => window.document.querySelector('#loading-container').innerHTML = '';
 
 /**
  * displayError

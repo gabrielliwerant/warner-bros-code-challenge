@@ -10,10 +10,17 @@ ul {
 
 #loading-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: #FFFFFF;
+  opacity: .85;
   font-size: 2rem;
   font-weight: bold;
+}
+
+#loading-overlay .loading-msg {
+  margin: auto;
 }
 
 #users-container {
