@@ -1,3 +1,5 @@
+const TODOS_BY_ID = 'https://jsonplaceholder.typicode.com/todos';
+
 /**
  * handleCompletedUiStatusForTodo
  *
@@ -38,6 +40,16 @@ const resetCheckboxStatus = el => {
 };
 
 /**
+ * removeTodo
+ *
+ * Remove a todo from the DOM
+ *
+ * @param {DOM Element} el
+ * @return {void}
+ */
+const removeTodo = el => el.remove();
+
+/**
  * addTodoClickEventHandlers
  *
  * Adds event handlers related to clicking on a todo todo checkbox
@@ -47,26 +59,41 @@ const resetCheckboxStatus = el => {
  * @return {void}
  */
 const addTodoClickEventHandlers = (id, status) => {
-  let todoCheckboxEl = window.document.getElementById(`todo-${id}`).getElementsByTagName('input')[0];
-
+  const todoEl = window.document.getElementById(`todo-${id}`);
+  let todoCheckboxEl = todoEl.getElementsByTagName('input')[0];
   todoCheckboxEl.addEventListener('click', e => {
     displayLoading();
 
-    fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+    fetch(`${TODOS_BY_ID}/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ completed: !status }),
       headers: { "Content-type": "application/json; charset=UTF-8" }
     })
-    .then(res => res.json())
-    .then(json => {
-      handleCompletedUiStatusForTodo(json.id);
-      removeLoading();
-    })
-    .catch(err => {
-      displayError(err);
-      resetCheckboxStatus(todoCheckboxEl);
-      removeLoading();
-    });
+      .then(res => res.json())
+      .then(json => {
+        handleCompletedUiStatusForTodo(json.id);
+        removeLoading();
+      })
+      .catch(err => {
+        displayError(err);
+        resetCheckboxStatus(todoCheckboxEl);
+        removeLoading();
+      });
+  });
+
+  let deleteButtonEl = window.document.getElementById(`todo-${id}`).querySelector('.delete-btn');
+  deleteButtonEl.addEventListener('click', e => {
+    displayLoading();
+
+    fetch(`${TODOS_BY_ID}/${id}`, { method: 'DELETE' })
+      .then(res => {
+        removeTodo(todoEl);
+        removeLoading();
+      })
+      .catch(err => {
+        displayError(err);
+        removeLoading();
+      });
   });
 };
 
@@ -90,8 +117,13 @@ const displayTodos = todos => {
 
     todoList += `
       <li id="todo-${todo.id}" class="todo ${completedClass}">
-        <input type="checkbox" ${checked} />
-        ${todo.title}
+        <div class="user-actions">
+          <div>
+            <input type="checkbox" ${checked} />
+            ${todo.title}
+          </div>
+          <button class="icon-btn delete-btn"><i class="material-icons">delete</i></button>
+        </div>
       </li>`
   });
   todoList += '</ul>';
