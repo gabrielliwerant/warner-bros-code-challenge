@@ -13,7 +13,16 @@ const displayTodos = todos => {
   displayLoading(todosContainerEl);
 
   todoList = '<ul>';
-  todos.forEach(todo => todoList += `<li id="todo-${todo.id}">${todo.title}</li>`);
+  todos.forEach(todo => {
+    let completedClass = todo.completed ? 'completed' : 'uncompleted';
+    let checked = todo.completed ? 'checked' : '';
+
+    todoList += `
+      <li id="todo-${todo.id}" class="todo ${completedClass}">
+        <input type="checkbox" ${checked} />
+        ${todo.title}
+      </li>`
+  });
   todoList += '</ul>';
   todosContainerEl.innerHTML = todoList;
 };
