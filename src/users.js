@@ -98,7 +98,7 @@ const addUserClickEventHandlers = (id, users) => {
  * display of todo information on click
  *
  * @param {array} users
- * return {void}
+ * @return {void}
  */
 const displayUsers = users => {
   const usersNavEl = window.document.querySelector('#users-container nav');

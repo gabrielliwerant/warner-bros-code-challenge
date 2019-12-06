@@ -29,7 +29,7 @@ const handleCompletedUiStatusForTodo = id => {
  * resetCheckboxStatus
  *
  * In the scenario that we need the original checkbox completed status (such as
- * in the event of a response error), we reset it here
+ * in the scenario of a response error), we reset it here
  *
  * @param {DOM Element} el
  * @return {void}
