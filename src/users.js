@@ -32,7 +32,7 @@ const handleActiveUiStatusForUser = (users, userEl) => {
  * handleActiveUiStatusForUserInfo
  *
  * Handles the toggling of the active status for the user info section for
- * purposes
+ * display purposes
  *
  * @param {DOM Element} userEl
  * @return {void}
@@ -95,7 +95,7 @@ const addUserClickEventHandlers = (id, users) => {
  * displayUsers
  *
  * Handles display of user list, adding event handlers for each user to enable
- * display of todo information on click.
+ * display of todo information on click
  *
  * @param {array} users
  * return {void}

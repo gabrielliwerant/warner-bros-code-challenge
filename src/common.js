@@ -22,7 +22,7 @@ const removeLoading = () => window.document.querySelector('#loading-container').
  * Displays erron messages
  *
  * @param {string} msg
- * @param {void}
+ * @return {void}
  */
 const displayError = msg => {
   const errorsEl = window.document.querySelector('#error-container');

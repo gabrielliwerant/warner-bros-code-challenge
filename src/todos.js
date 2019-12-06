@@ -28,11 +28,11 @@ const handleCompletedUiStatusForTodo = id => {
 /**
  * resetCheckboxStatus
  *
- * In the event that we need the original checkbox completed status (such as in
- * the event of a response error), we reset it here
+ * In the scenario that we need the original checkbox completed status (such as
+ * in the event of a response error), we reset it here
  *
  * @param {DOM Element} el
- * @returns {void}
+ * @return {void}
  */
 const resetCheckboxStatus = el => {
   if (el.checked) el.checked = false;
@@ -67,7 +67,7 @@ const removeTodo = (todos, id, el) => {
  * @param {number} id
  * @param {title} title
  * @param {boolean} completed
- * @return {boid}
+ * @return {void}
  */
 const addTodo = (todos, userId, id, title, completed) => {
   // KLUDGE: Normally we would use the returned id from the POST response, but
@@ -154,7 +154,7 @@ const addTodoClickEventHandlers = (id, status, todos) => {
  * @param {number} id
  * @param {string} title
  * @param {boolean} completed
- * @returns {string}
+ * @return {string}
  */
 const getNewTodo = (id, title, completed) => {
   const completedClass = completed ? 'completed' : 'uncompleted';
@@ -175,7 +175,7 @@ const getNewTodo = (id, title, completed) => {
 /**
  * addEventHandlerForCreatingTodos
  *
- * Add the event handles necessary to allow creation of new todo items
+ * Add the event handlers necessary to allow creation of new todo items
  *
  * @param {number} userId
  * @param {array} todos
